@@ -110,6 +110,13 @@
                 transform: translateY(100vh);
             }
         }
+
+        .final-message {
+            display: none;
+            font-size: 20px;
+            color: #e91e63;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -125,9 +132,12 @@
         
         <div id="result" class="result"></div>
         <button id="questionBtn" class="btn" style="display: none;">i nya apa?</button>
+        <button id="againBtn" class="btn" style="display: none;">Tekan sini agik</button>
+        <div id="finalMessage" class="final-message">Maok tau lagu yang cocok untok kau ndak?</div>
     </div>
 
     <iframe id="musicPlayer" width="0" height="0" src="https://www.youtube.com/embed/RcbJfOBPNps?autoplay=0&enablejsapi=1" frameborder="0" allow="autoplay"></iframe>
+    <iframe id="secondMusicPlayer" width="0" height="0" src="https://www.youtube.com/embed/jStNaVCW838?autoplay=0&enablejsapi=1" frameborder="0" allow="autoplay" style="display: none;"></iframe>
 
     <script>
         // Elemen DOM
@@ -137,7 +147,10 @@
         const submitBtn = document.getElementById('submitBtn');
         const result = document.getElementById('result');
         const questionBtn = document.getElementById('questionBtn');
+        const againBtn = document.getElementById('againBtn');
+        const finalMessage = document.getElementById('finalMessage');
         const musicPlayer = document.getElementById('musicPlayer');
+        const secondMusicPlayer = document.getElementById('secondMusicPlayer');
         
         // Animasi hati
         function createHeart() {
@@ -189,8 +202,24 @@
             result.innerHTML = `${name} i nya.. ${modifiedName}`;
             questionBtn.style.display = 'none';
             
-            // Putar musik
+            // Putar musik pertama
             musicPlayer.src = "https://www.youtube.com/embed/RcbJfOBPNps?autoplay=1&enablejsapi=1";
+            
+            // Set timer untuk menampilkan tombol "lagi" setelah lagu selesai (diperkirakan)
+            setTimeout(() => {
+                againBtn.style.display = 'block';
+            }, 200000); // Sesuaikan dengan durasi lagu pertama (3:20 = 200 detik)
+        });
+        
+        againBtn.addEventListener('click', () => {
+            againBtn.style.display = 'none';
+            finalMessage.style.display = 'block';
+            
+            // Putar musik kedua
+            setTimeout(() => {
+                secondMusicPlayer.style.display = 'block';
+                secondMusicPlayer.src = "https://www.youtube.com/embed/jStNaVCW838?autoplay=1&enablejsapi=1";
+            }, 2000);
         });
     </script>
 </body>
