@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Animasi Pink</title>
+    <style>
+        body {
+            background-color: #ffebee;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            animation: colorChange 10s infinite alternate;
+        }
+
+        @keyframes colorChange {
+            0% { background-color: #ffebee; }
+            25% { background-color: #fce4ec; }
+            50% { background-color: #f8bbd0; }
+            75% { background-color: #f48fb1; }
+            100% { background-color: #f06292; }
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 80%;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        h1 {
+            color: #e91e63;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background-color: #e91e63;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(233, 30, 99, 0.4);
+        }
+
+        .btn:hover {
+            background-color: #c2185b;
+            transform: scale(1.05);
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        .input-container {
+            margin: 20px 0;
+            display: none;
+        }
+
+        input {
+            padding: 10px;
+            border: 2px solid #f8bbd0;
+            border-radius: 10px;
+            font-size: 16px;
+            width: 70%;
+            margin-bottom: 15px;
+        }
+
+        .result {
+            display: none;
+            margin-top: 20px;
+            font-size: 24px;
+            color: #e91e63;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .heart {
+            position: absolute;
+            pointer-events: none;
+            animation: fall linear;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Selamat Datang!</h1>
+        <button id="startBtn" class="btn">Tekan di Sini</button>
+        
+        <div id="inputContainer" class="input-container">
+            <p>Masukkan nama Anda:</p>
+            <input type="text" id="nameInput" placeholder="Ketik nama di sini...">
+            <button id="submitBtn" class="btn">Kirim</button>
+        </div>
+        
+        <div id="result" class="result"></div>
+        <button id="questionBtn" class="btn" style="display: none;">i nya apa?</button>
+    </div>
+
+    <iframe id="musicPlayer" width="0" height="0" src="https://www.youtube.com/embed/RcbJfOBPNps?autoplay=0&enablejsapi=1" frameborder="0" allow="autoplay"></iframe>
+
+    <script>
+        // Elemen DOM
+        const startBtn = document.getElementById('startBtn');
+        const inputContainer = document.getElementById('inputContainer');
+        const nameInput = document.getElementById('nameInput');
+        const submitBtn = document.getElementById('submitBtn');
+        const result = document.getElementById('result');
+        const questionBtn = document.getElementById('questionBtn');
+        const musicPlayer = document.getElementById('musicPlayer');
+        
+        // Animasi hati
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+            heart.style.opacity = Math.random() * 0.5 + 0.5;
+            document.body.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+        
+        // Event listeners
+        startBtn.addEventListener('click', () => {
+            startBtn.style.display = 'none';
+            inputContainer.style.display = 'block';
+            // Mulai animasi hati
+            setInterval(createHeart, 300);
+        });
+        
+        submitBtn.addEventListener('click', () => {
+            const name = nameInput.value.trim();
+            if (name) {
+                inputContainer.style.display = 'none';
+                result.textContent = name;
+                result.style.display = 'block';
+                questionBtn.style.display = 'block';
+                
+                // Cek jika nama mengandung "Indah"
+                if (name.toLowerCase().includes('indah')) {
+                    setTimeout(() => {
+                        questionBtn.click();
+                    }, 1500);
+                }
+            }
+        });
+        
+        questionBtn.addEventListener('click', () => {
+            const name = nameInput.value.trim();
+            const modifiedName = name.replace(/i/ig, match => {
+                return match === 'I' ? '❤️' : '💖';
+            });
+            
+            result.innerHTML = `${name} i nya.. ${modifiedName}`;
+            questionBtn.style.display = 'none';
+            
+            // Putar musik
+            musicPlayer.src = "https://www.youtube.com/embed/RcbJfOBPNps?autoplay=1&enablejsapi=1";
+        });
+    </script>
+</body>
+</html>
