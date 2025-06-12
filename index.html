@@ -114,12 +114,12 @@
 </head>
 <body>
     <div class="container">
-        <h1>Selamat Datang Syifa!</h1>
+        <h1>Selamat Datang!</h1>
         <button id="startBtn" class="btn">Tekan di Sini</button>
         
         <div id="inputContainer" class="input-container">
             <p>Masukkan nama Anda:</p>
-            <input type="text" id="nameInput" placeholder="Ketik nama di sini..." value="Syifa">
+            <input type="text" id="nameInput" placeholder="Ketik nama di sini...">
             <button id="submitBtn" class="btn">Kirim</button>
         </div>
         
@@ -127,7 +127,7 @@
         <button id="questionBtn" class="btn" style="display: none;">i nya apa?</button>
     </div>
 
-    <iframe id="musicPlayer" width="0" height="0" src="https://www.youtube.com/embed/1WoYjuzvtuw?autoplay=0&enablejsapi=1" frameborder="0" allow="autoplay"></iframe>
+    <iframe id="musicPlayer" width="0" height="0" src="https://www.youtube.com/embed/RcbJfOBPNps?autoplay=0&enablejsapi=1" frameborder="0" allow="autoplay"></iframe>
 
     <script>
         // Elemen DOM
@@ -171,8 +171,8 @@
                 result.style.display = 'block';
                 questionBtn.style.display = 'block';
                 
-                // Cek jika nama mengandung "Syifa"
-                if (name.toLowerCase().includes('syifa')) {
+                // Cek jika nama mengandung "Indah"
+                if (name.toLowerCase().includes('indah')) {
                     setTimeout(() => {
                         questionBtn.click();
                     }, 1500);
@@ -190,7 +190,7 @@
             questionBtn.style.display = 'none';
             
             // Putar musik
-            musicPlayer.src = "https://www.youtube.com/embed/1WoYjuzvtuw?autoplay=1&enablejsapi=1";
+            musicPlayer.src = "https://www.youtube.com/embed/RcbJfOBPNps?autoplay=1&enablejsapi=1";
         });
     </script>
 </body>
