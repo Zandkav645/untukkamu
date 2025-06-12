@@ -117,6 +117,19 @@
             color: #e91e63;
             margin-top: 20px;
         }
+
+        .music-note {
+            position: absolute;
+            font-size: 24px;
+            animation: floatNote 3s linear forwards;
+        }
+
+        @keyframes floatNote {
+            to {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -136,8 +149,7 @@
         <div id="finalMessage" class="final-message">Maok tau lagu yang cocok untok kau ndak?</div>
     </div>
 
-    <iframe id="musicPlayer" width="0" height="0" src="https://www.youtube.com/embed/RcbJfOBPNps?autoplay=0&enablejsapi=1" frameborder="0" allow="autoplay"></iframe>
-    <iframe id="secondMusicPlayer" width="0" height="0" src="https://www.youtube.com/embed/jStNaVCW838?autoplay=0&enablejsapi=1" frameborder="0" allow="autoplay" style="display: none;"></iframe>
+    <div id="player"></div>
 
     <script>
         // Elemen DOM
@@ -149,8 +161,6 @@
         const questionBtn = document.getElementById('questionBtn');
         const againBtn = document.getElementById('againBtn');
         const finalMessage = document.getElementById('finalMessage');
-        const musicPlayer = document.getElementById('musicPlayer');
-        const secondMusicPlayer = document.getElementById('secondMusicPlayer');
         
         // Animasi hati
         function createHeart() {
@@ -166,6 +176,22 @@
             setTimeout(() => {
                 heart.remove();
             }, 5000);
+        }
+
+        // Animasi not musik
+        function createMusicNote() {
+            const notes = ['♪', '♫', '♩', '♬'];
+            const note = document.createElement('div');
+            note.classList.add('music-note');
+            note.textContent = notes[Math.floor(Math.random() * notes.length)];
+            note.style.left = Math.random() * 100 + 'vw';
+            note.style.bottom = '0';
+            note.style.color = ['#e91e63', '#c2185b', '#f06292', '#f8bbd0'][Math.floor(Math.random() * 4)];
+            document.body.appendChild(note);
+            
+            setTimeout(() => {
+                note.remove();
+            }, 3000);
         }
         
         // Event listeners
@@ -202,13 +228,13 @@
             result.innerHTML = `${name} i nya.. ${modifiedName}`;
             questionBtn.style.display = 'none';
             
-            // Putar musik pertama
-            musicPlayer.src = "https://www.youtube.com/embed/RcbJfOBPNps?autoplay=1&enablejsapi=1";
+            // Putar musik pertama (dengan interaksi pengguna)
+            playFirstSong();
             
-            // Set timer untuk menampilkan tombol "lagi" setelah lagu selesai (diperkirakan)
+            // Set timer untuk menampilkan tombol "lagi" setelah 10 detik (untuk demo)
             setTimeout(() => {
                 againBtn.style.display = 'block';
-            }, 200000); // Sesuaikan dengan durasi lagu pertama (3:20 = 200 detik)
+            }, 10000); // Diperpendek untuk demo
         });
         
         againBtn.addEventListener('click', () => {
@@ -217,10 +243,35 @@
             
             // Putar musik kedua
             setTimeout(() => {
-                secondMusicPlayer.style.display = 'block';
-                secondMusicPlayer.src = "https://www.youtube.com/embed/jStNaVCW838?autoplay=1&enablejsapi=1";
+                playSecondSong();
+                // Animasi not musik
+                setInterval(createMusicNote, 500);
             }, 2000);
         });
+
+        // Fungsi untuk memutar lagu pertama
+        function playFirstSong() {
+            const iframe = document.createElement('iframe');
+            iframe.id = 'firstSong';
+            iframe.width = '0';
+            iframe.height = '0';
+            iframe.src = 'https://www.youtube.com/embed/RcbJfOBPNps?autoplay=1&enablejsapi=1';
+            iframe.frameBorder = '0';
+            iframe.allow = 'autoplay';
+            document.getElementById('player').appendChild(iframe);
+        }
+
+        // Fungsi untuk memutar lagu kedua
+        function playSecondSong() {
+            const iframe = document.createElement('iframe');
+            iframe.id = 'secondSong';
+            iframe.width = '0';
+            iframe.height = '0';
+            iframe.src = 'https://www.youtube.com/embed/jStNaVCW838?autoplay=1&enablejsapi=1';
+            iframe.frameBorder = '0';
+            iframe.allow = 'autoplay';
+            document.getElementById('player').appendChild(iframe);
+        }
     </script>
 </body>
 </html>
